@@ -7,13 +7,20 @@ const Container = styled.div`
   border-radius: 4px;
   margin: 10px 0;
   padding: 10px 10px;
-  background: #EC8B6E;
-  color: white;
-  width: 100%;
+  background: ${props => props.theme.contrast};
+  color: ${props => props.theme.fontColor};
+  width: calc(100%-12px);
   overflow: hidden;
   box-shadow: 0px 6px 8px rgba(164, 164, 164, 0.213825);
   border-radius: 3px;
 `
+
+Container.defaultProps = {
+  theme:{
+    contrast: "white",
+    fontColor: "black"
+  }
+}
 
 const TodoItem = ({todo, index}) => (
   <Draggable

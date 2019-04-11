@@ -7,7 +7,7 @@ const Container = styled.div`
     width: 50vw;
   }
   @media only screen and (min-width: 320px) and (max-width: 768px){
-    width: 85vw;
+    width: 95vw;
   }
 `;
 

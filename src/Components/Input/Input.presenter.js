@@ -1,18 +1,21 @@
 import styled from 'styled-components';
 
 const InputPresenter = styled.input`
-  height: 20px;
-  border: 1px solid #F6F8F8;
-  border-bottom: 1px solid #EC8B6E;
-  outline: none;
-  padding: 10px;
-  margin: 20px 0;
+  width: calc(100% - 16px);
+  height: 56px;
+  position: relative;
+  padding: 0px 0 0 16px;
+  border: none;
+  border-radius: 4px;
   font-size: 16px;
-  transition: box-shadow 1.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
-  &:focus {
-    box-shadow: 0 0 10px #EC8B6E;
-    border: 1px solid #EC8B6E;
+  font-weight: 400;
+  line-height: normal;
+  background-color: transparent;
+  color: white;
+  outline: none;
+  -webkit-appearance: none;
+  &::-webkit-input-placeholder{
+    color: white;
   }
 `
 

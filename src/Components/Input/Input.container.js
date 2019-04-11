@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import InputPresenter from "./Input.presenter";
+import InputSkin from './InputSkin';
 
 export default class InputContainer extends Component {
 
     static propTypes = {
         handleUpdate: PropTypes.func.isRequired
     }
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            value: ""
+            value: "",
+            active: false
         }
     }
 
@@ -18,7 +20,7 @@ export default class InputContainer extends Component {
      * The typical onChange handler for inputs
      *
      */
-    handleChange = ({target}) => {
+    handleChange = ({ target }) => {
         this.setState({
             value: target.value
         });
@@ -29,8 +31,8 @@ export default class InputContainer extends Component {
      * is pressed
      *
      */
-    handleKeyPress = ({key}) => {
-        if(key === "Enter"){
+    handleKeyPress = ({ key }) => {
+        if (key === "Enter") {
             this.addTask(this.state.value);
             this.setState({
                 value: ""
@@ -49,13 +51,31 @@ export default class InputContainer extends Component {
         this.props.handleUpdate(description);
     };
 
-    render(){
-        return(
-            <InputPresenter
-                value={this.state.value}
-                onChange={this.handleChange}
-                onKeyPress={this.handleKeyPress}
-            />
+    handleFocus = () => {
+        this.setState({
+            active: true
+        });
+    }
+
+    handleBlur = () => {
+        this.setState({
+            active: false
+        });
+    }
+
+
+    render() {
+        return (
+            <InputSkin active={this.state.active}>
+                <InputPresenter
+                    value={this.state.value}
+                    onChange={this.handleChange}
+                    onKeyPress={this.handleKeyPress}
+                    onFocus={this.handleFocus}
+                    onBlur={this.handleBlur}
+                    placeholder="I plan to..."
+                />
+            </InputSkin>
         )
     }
 

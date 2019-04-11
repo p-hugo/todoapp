@@ -6,6 +6,9 @@ import InputContainer from './Components/Input/Input.container';
 import TodoBin from './Components/TodoBin'
 import TodoItem from './Components/TodoItem'
 import Container from './Components/Container';
+import { ThemeProvider } from 'styled-components'
+import {theme} from './utils/theme.config';
+
 class App extends Component {
 
   constructor(props) {
@@ -54,20 +57,23 @@ class App extends Component {
   render() {
     const { todos, order } = this.state;
     const todoList = order.map((todoID, i) => <TodoItem todo={todos[todoID]} index={i} key={todoID} />);
+    console.log(theme);
     return (
-      <Wrapper>
-        <Container>
-          <h1>What are your plans for today?</h1>
-          <InputContainer handleUpdate={this.handleUpdate} />
-          <DragDropContext
-            onDragEnd={this.handleDragEnd}
-          >
-            <TodoBin id="todos-1">
-              {todoList}
-            </TodoBin>
-          </DragDropContext>
-        </Container>
-      </Wrapper>
+      <ThemeProvider theme={theme}>
+        <Wrapper>
+          <Container>
+            <h1>What are your plans for today?</h1>
+            <InputContainer handleUpdate={this.handleUpdate} />
+            <DragDropContext
+              onDragEnd={this.handleDragEnd}
+            >
+              <TodoBin id="todos-1">
+                {todoList}
+              </TodoBin>
+            </DragDropContext>
+          </Container>
+        </Wrapper>
+      </ThemeProvider>
     );
   }
 }
