@@ -8,6 +8,8 @@ const Container = styled.div`
   display: inline-block;
   padding: 5px 20px;
   border: 1px solid lightgray;
+  max-height: 50vh;
+  overflow-y: scroll;
 `
 
 const TodoCard = styled.div`

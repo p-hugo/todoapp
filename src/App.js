@@ -5,6 +5,7 @@ import { randomId } from './utils/randomIds';
 import InputContainer from './Components/Input/Input.container';
 import TodoBin from './Components/TodoBin'
 import TodoItem from './Components/TodoItem'
+import Container from './Components/Container';
 class App extends Component {
 
   constructor(props) {
@@ -52,18 +53,20 @@ class App extends Component {
 
   render() {
     const { todos, order } = this.state;
-    const todoList = order.map((todoID, i) => <TodoItem todo={todos[todoID]} index={i} key={todoID}/> );
+    const todoList = order.map((todoID, i) => <TodoItem todo={todos[todoID]} index={i} key={todoID} />);
     return (
       <Wrapper>
-        <h1>What are your plans for today?</h1>
-        <InputContainer handleUpdate={this.handleUpdate}/>
-        <DragDropContext
-          onDragEnd={this.handleDragEnd}
-        >
-          <TodoBin id="todos-1">
-            {todoList}
-          </TodoBin>
-        </DragDropContext>
+        <Container>
+          <h1>What are your plans for today?</h1>
+          <InputContainer handleUpdate={this.handleUpdate} />
+          <DragDropContext
+            onDragEnd={this.handleDragEnd}
+          >
+            <TodoBin id="todos-1">
+              {todoList}
+            </TodoBin>
+          </DragDropContext>
+        </Container>
       </Wrapper>
     );
   }

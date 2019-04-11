@@ -6,6 +6,8 @@ const InputPresenter = styled.input`
   border-bottom: 1px solid #EC8B6E;
   outline: none;
   padding: 10px;
+  margin: 20px 0;
+  font-size: 16px;
   transition: box-shadow 1.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
   &:focus {
