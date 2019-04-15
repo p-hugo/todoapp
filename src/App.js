@@ -7,7 +7,8 @@ import TodoBin from './Components/TodoBin'
 import TodoItem from './Components/TodoItem'
 import Container from './Components/Container';
 import { ThemeProvider } from 'styled-components'
-import {theme} from './utils/theme.config';
+import {theme, lightTheme} from './utils/theme.config';
+import ToggleButton from './Components/ToggleButton';
 
 class App extends Component {
 
@@ -18,6 +19,7 @@ class App extends Component {
         "xyz": { id: "xyz", content: "Finish todo app" }
       },
       order: ["xyz"],
+      theme: theme
     };
   }
 
@@ -54,14 +56,27 @@ class App extends Component {
     }))
   };
 
+  handleToggle = e => {
+    if(this.state.theme === lightTheme){
+      this.setState({
+        theme: theme
+      })
+    }else {
+      this.setState({
+        theme: lightTheme
+      })
+    }
+  }
+
   render() {
-    const { todos, order } = this.state;
+    const { todos, order, theme } = this.state;
     const todoList = order.map((todoID, i) => <TodoItem todo={todos[todoID]} index={i} key={todoID} />);
     console.log(theme);
     return (
       <ThemeProvider theme={theme}>
         <Wrapper>
           <Container>
+            <p>Change the theme! <ToggleButton active={theme === lightTheme} onClick={this.handleToggle}/></p>
             <h1>What are your plans for today?</h1>
             <InputContainer handleUpdate={this.handleUpdate} />
             <DragDropContext
