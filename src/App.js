@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Wrapper from './Components/Wrapper'
 import { DragDropContext } from 'react-beautiful-dnd';
 import { randomId } from './utils/randomIds';
@@ -7,80 +7,55 @@ import TodoBin from './Components/TodoBin'
 import TodoItem from './Components/TodoItem'
 import Container from './Components/Container';
 import { ThemeProvider } from 'styled-components'
-import {theme, lightTheme} from './utils/theme.config';
+import {theme as importedTheme, lightTheme} from './utils/theme.config';
 import ToggleButton from './Components/ToggleButton';
 
-class App extends Component {
+export default function App() {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      todos: {
-        "xyz": { id: "xyz", content: "Finish todo app" }
-      },
-      order: ["xyz"],
-      theme: theme
-    };
-  }
+  const [todos, setTodos] = useState({
+    "xyz": { id: "xyz", content: "Finish todo app" }
+  });
+  const [order, setOrder] = useState(["xyz"]);
+  const [theme, setTheme] = useState(importedTheme);
 
-  handleDragEnd = result => {
+  const handleDragEnd = result => {
     const { draggableId, destination, source } = result;
     if (!destination) return null;
     if (destination.index === source.index) return;
-    let newOrder = Array.from(this.state.order);
+    let newOrder = Array.from(order);
     newOrder.splice(source.index, 1);
     newOrder.splice(destination.index, 0, draggableId);
-    this.setState({
-      order: newOrder
-    });
+    setOrder(newOrder);
   }
 
-  handleClick = () => {
-    this.setState({
-      id: randomId()
-    })
-  };
-
-  handleUpdate = content => {
+  const handleUpdate = content => {
     const newTodo = {
       id: randomId(),
       content
     }
-
-    this.setState(prevState => ({
-      todos: {
-        ...prevState.todos,
-        [newTodo.id]: newTodo
-      },
-      order: [newTodo.id, ...prevState.order]
-    }))
+    setTodos({...todos, [newTodo.id]: newTodo});
+    setOrder([newTodo.id, ...order]);
   };
 
-  handleToggle = e => {
-    if(this.state.theme === lightTheme){
-      this.setState({
-        theme: theme
-      })
+  const handleToggle = e => {
+    if(theme === lightTheme){
+      setTheme(importedTheme);
     }else {
-      this.setState({
-        theme: lightTheme
-      })
+      setTheme(lightTheme);
     }
   }
 
-  render() {
-    const { todos, order, theme } = this.state;
-    const todoList = order.map((todoID, i) => <TodoItem todo={todos[todoID]} index={i} key={todoID} />);
+  const todoList = order.map((todoID, i) => <TodoItem todo={todos[todoID]} index={i} key={todoID} />);
     console.log(theme);
     return (
       <ThemeProvider theme={theme}>
         <Wrapper>
           <Container>
-            <p>Change the theme! <ToggleButton active={theme === lightTheme} onClick={this.handleToggle}/></p>
+            <p>Change the theme! <ToggleButton active={theme === lightTheme} onClick={handleToggle}/></p>
             <h1>What are your plans for today?</h1>
-            <InputContainer handleUpdate={this.handleUpdate} />
+            <InputContainer handleUpdate={handleUpdate} />
             <DragDropContext
-              onDragEnd={this.handleDragEnd}
+              onDragEnd={handleDragEnd}
             >
               <TodoBin id="todos-1">
                 {todoList}
@@ -90,7 +65,4 @@ class App extends Component {
         </Wrapper>
       </ThemeProvider>
     );
-  }
 }
-
-export default App;
