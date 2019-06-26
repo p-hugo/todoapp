@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import Wrapper from './Components/Wrapper'
+import Wrapper from './components/Wrapper'
 import { DragDropContext } from 'react-beautiful-dnd';
 import { randomId } from './utils/randomIds';
-import InputContainer from './Components/Input/Input.container';
-import TodoBin from './Components/TodoBin'
-import TodoItem from './Components/TodoItem'
-import Container from './Components/Container';
+import Input from './components/Input/';
+import TodoBin from './components/TodoBin'
+import TodoItem from './components/TodoItem'
+import Container from './components/Container';
 import { ThemeProvider } from 'styled-components'
 import {theme as importedTheme, lightTheme} from './utils/theme.config';
-import ToggleButton from './Components/ToggleButton';
+import ToggleButton from './components/ToggleButton';
 
 export default function App() {
 
@@ -53,7 +53,7 @@ export default function App() {
           <Container>
             <p>Change the theme! <ToggleButton active={theme === lightTheme} onClick={handleToggle}/></p>
             <h1>What are your plans for today?</h1>
-            <InputContainer handleUpdate={handleUpdate} />
+            <Input handleUpdate={handleUpdate} />
             <DragDropContext
               onDragEnd={handleDragEnd}
             >
