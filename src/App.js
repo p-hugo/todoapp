@@ -11,7 +11,14 @@ import ToggleButton from "./components/ToggleButton";
 import useTodos from "./useTodos";
 
 export default function App() {
-  const { todos, order, handleAdd, handleDragEnd } = useTodos({});
+  const {
+    todos,
+    order,
+    handleAdd,
+    handleDragEnd,
+    handleRemove,
+    handleToggle: toggler
+  } = useTodos({});
   const [theme, setTheme] = useState(importedTheme);
 
   const handleToggle = e => {
@@ -23,9 +30,15 @@ export default function App() {
   };
 
   const todoList = order.map((todoID, i) => (
-    <TodoItem todo={todos[todoID]} index={i} key={todoID} />
+    <TodoItem
+      todo={todos[todoID]}
+      index={i}
+      key={todoID}
+      handleRemove={handleRemove}
+      handleToggle={toggler}
+    />
   ));
-  console.log(theme);
+  
   return (
     <ThemeProvider theme={theme}>
       <Wrapper>

@@ -8,17 +8,22 @@ const todoReducer = (state, action) => {
       const { content } = action;
       const order = [id, ...state.order];
       return {
-        todos: { ...state.todos, [id]: { id, content } },
+        todos: { ...state.todos, [id]: { id, content, complete: false } },
         order
       };
     }
     case "TODO_REMOVE": {
       // Implementation to follow
-      return;
+      let todos = Object.assign({}, state.todos);
+      delete todos[action.id];
+      let order = Array.from(state.order);
+      order = order.filter(v => v !== action.id);
+      return { todos, order };
     }
     case "TODO_TOGGLE": {
-      // Implementation to follow
-      return;
+      const todo = Object.assign({}, state.todos[action.id]);
+      todo.complete = action.value;
+      return { ...state, todos: { ...state.todos, [action.id]: todo } };
     }
     case "DRAG_TODO": {
       const { result } = action;
@@ -56,7 +61,22 @@ const useTodos = initialState => {
     });
   };
 
-  return { ...state, handleAdd, handleDragEnd };
+  const handleRemove = id => {
+    dispatch({
+      type: "TODO_REMOVE",
+      id
+    });
+  };
+
+  const handleToggle = (id, value) => {
+    dispatch({
+      type: "TODO_TOGGLE",
+      id,
+      value
+    });
+  };
+
+  return { ...state, handleAdd, handleDragEnd, handleRemove, handleToggle };
 };
 
 export default useTodos;
